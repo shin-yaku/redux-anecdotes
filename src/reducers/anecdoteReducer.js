@@ -35,6 +35,13 @@ export const initializeAnecdotes = (anecdotes) => {
   }
 }
 
+export const createAnecdote = (data) => {
+  return {
+    type: 'NEW_ANECDOTE',
+    data,
+  }
+}
+
 const reducer = (state = [], action) => {
   console.log('state now: ', state)
   console.log('action', action)
