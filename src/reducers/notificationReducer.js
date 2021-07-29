@@ -18,17 +18,23 @@ const reducer = (state = initialInvisibleNotification, action) => {
   }
 }
 
-export const newNotification = (message) => {
-  return {
-    type: 'NOTIFICATION_ON',
-    data: {
-      message: message,
-      visible: true
-    }
+export const newNotification = (message, deleteSecond) => {
+  return async dispatch => {
+    console.log("hoge");
+    dispatch( {
+        type: 'NOTIFICATION_ON',
+        data: {
+          message: message,
+          visible: true
+        }
+      }
+    )
+    await new Promise(() => setTimeout(() => deleteNotification(), deleteSecond * 1000))
+    console.log("fuga");
   }
 }
 
-export const deleteNotification = () => {
+const deleteNotification = () => {
   console.log("hoge");
   return {
     type: 'NOTIFICATION_OFF',
