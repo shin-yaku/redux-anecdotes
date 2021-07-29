@@ -28,7 +28,14 @@ export const upvote = (id) => {
   }
 }
 
-const reducer = (state = initialState, action) => {
+export const initializeAnecdotes = (anecdotes) => {
+  return {
+    type: 'INIT_ANECDOTES',
+    data: anecdotes,
+  }
+}
+
+const reducer = (state = [], action) => {
   console.log('state now: ', state)
   console.log('action', action)
 
@@ -45,6 +52,9 @@ const reducer = (state = initialState, action) => {
       )
     case 'NEW_ANECDOTE':
       return [...state, action.data]
+
+    case 'INIT_ANECDOTES':
+      return action.data
 
     default:
       return state
