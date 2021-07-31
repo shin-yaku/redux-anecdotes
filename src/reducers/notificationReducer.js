@@ -1,6 +1,7 @@
 const initialInvisibleNotification = {
   message: '',
-  visible: false
+  visible: false,
+  timeoutId: null
 }
 
 // const reducer = (state = initialInvisibleNotification, action) => {
@@ -10,6 +11,7 @@ const reducer = (state = initialInvisibleNotification, action) => {
 
   switch(action.type) {
     case 'NOTIFICATION_ON':
+      clearTimeout(state.timeoutId)
       return action.data
     case 'NOTIFICATION_OFF':
       return action.data
@@ -20,24 +22,26 @@ const reducer = (state = initialInvisibleNotification, action) => {
 
 export const newNotification = (message, deleteSecond) => {
   return async dispatch => {
-    dispatch( {
-        type: 'NOTIFICATION_ON',
-        data: {
-          message: message,
-          visible: true
-        }
-      }
-    )
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       dispatch( {
           type: 'NOTIFICATION_OFF',
           data: {
             message: message,
-            data: initialInvisibleNotification
+            data: initialInvisibleNotification,
           }
         }
       )
     }, deleteSecond * 1000)
+
+    dispatch( {
+        type: 'NOTIFICATION_ON',
+        data: {
+          message: message,
+          visible: true,
+          timeoutId: timeoutId
+        }
+      }
+    )
   }
 }
 
