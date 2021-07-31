@@ -14,7 +14,7 @@ const reducer = (state = initialInvisibleNotification, action) => {
       clearTimeout(state.timeoutId)
       return action.data
     case 'NOTIFICATION_OFF':
-      return action.data
+      return initialInvisibleNotification
     default:
       return state
   }
@@ -23,14 +23,9 @@ const reducer = (state = initialInvisibleNotification, action) => {
 export const newNotification = (message, deleteSecond) => {
   return async dispatch => {
     const timeoutId = setTimeout(() => {
-      dispatch( {
-          type: 'NOTIFICATION_OFF',
-          data: {
-            message: message,
-            data: initialInvisibleNotification,
-          }
-        }
-      )
+      dispatch({
+          type: 'NOTIFICATION_OFF'
+        })
     }, deleteSecond * 1000)
 
     dispatch( {
@@ -42,14 +37,6 @@ export const newNotification = (message, deleteSecond) => {
         }
       }
     )
-  }
-}
-
-const deleteNotification = () => {
-  console.log("hoge");
-  return {
-    type: 'NOTIFICATION_OFF',
-    data: initialInvisibleNotification
   }
 }
 
